@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "build-css": "node-sass-chokidar ./dist/react-wizard.scss -o dist/",
-        "build": "mkdir -p dist && babel index.js -o dist/index.js && npm run build-css"
+        "build": "mkdir -p dist && babel index.js -o dist/index.js"
     },
     "babel": {
         "presets": [
