@@ -29,7 +29,7 @@
         "react": "16.x.x",
         "reactstrap": "8.x.x",
         "prop-types": "15.x.x",
-        "classnames": "2.2.6"
+        "classnames": "2.x.x"
     },
     "keywords": [
         "react",
