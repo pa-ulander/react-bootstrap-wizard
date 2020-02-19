@@ -298,7 +298,7 @@ class ReactWizard extends React.Component {
                         }
                       />
                     ) : null}
-                    {this.props.steps[this.state.currentStep].stepName}
+                    {`▲`}
                   </div>
                 )}
               </div>
