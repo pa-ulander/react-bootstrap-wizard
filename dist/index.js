@@ -293,7 +293,7 @@ var ReactWizard = function (_React$Component) {
                 this.props.steps[this.state.currentStep].stepIcon !== undefined && this.props.steps[this.state.currentStep].stepIcon !== "" ? _react2.default.createElement("i", {
                   className: this.props.steps[this.state.currentStep].stepIcon
                 }) : null,
-                this.props.steps[this.state.currentStep].stepName
+                "\u25B2"
               )
             )
           ) : null,
