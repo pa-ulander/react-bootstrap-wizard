@@ -404,7 +404,7 @@ ReactWizard.propTypes = {
   steps: _propTypes2.default.arrayOf(_propTypes2.default.shape({
     stepName: _propTypes2.default.string.isRequired,
     stepIcon: _propTypes2.default.string,
-    component: _propTypes2.default.oneOf([_propTypes2.default.func, _propTypes2.default.object]).isRequired,
+    component: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.object]).isRequired,
     stepProps: _propTypes2.default.object
   })).isRequired
 };

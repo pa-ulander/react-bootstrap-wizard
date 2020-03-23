@@ -404,7 +404,7 @@ ReactWizard.propTypes = {
     PropTypes.shape({
       stepName: PropTypes.string.isRequired,
       stepIcon: PropTypes.string,
-      component: PropTypes.oneOf([PropTypes.func, PropTypes.object]).isRequired,
+      component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
       stepProps: PropTypes.object
     })
   ).isRequired
