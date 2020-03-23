@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Card,
   CardHeader,
@@ -11,35 +11,35 @@ import {
   TabContent,
   TabPane,
   Button
-} from "reactstrap";
-import PropTypes from "prop-types";
-import classnames from "classnames";
+} from 'reactstrap'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 class ReactWizard extends React.Component {
   constructor(props) {
-    super(props);
-    let width;
+    super(props)
+    let width
     if (this.props.steps.length === 1) {
-      width = "100%";
+      width = '100%'
     } else {
       if (window.innerWidth < 600) {
         if (this.props.steps.length !== 3) {
-          width = "50%";
+          width = '50%'
         } else {
-          width = 100 / 3 + "%";
+          width = 100 / 3 + '%'
         }
       } else {
         if (this.props.steps.length === 2) {
-          width = "50%";
+          width = '50%'
         } else {
-          width = 100 / 3 + "%";
+          width = 100 / 3 + '%'
         }
       }
     }
     this.state = {
       currentStep: 0,
       highestStep: 0,
-      color: this.props.color !== undefined ? this.props.color : "primary",
+      color: this.props.color !== undefined ? this.props.color : 'primary',
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
       finishButton: this.props.steps.length === 1 ? true : false,
@@ -47,45 +47,45 @@ class ReactWizard extends React.Component {
       wizardData:
         this.props.wizardData !== undefined ? this.props.wizardData : {},
       movingTabStyle: {
-        transition: "transform 0s"
+        transition: 'transform 0s'
       },
       progressbarStyle: {
-        width: 100 / this.props.steps.length / 2 + "%"
+        width: 100 / this.props.steps.length / 2 + '%'
       }
-    };
-    this.navigationStepChange = this.navigationStepChange.bind(this);
-    this.refreshAnimation = this.refreshAnimation.bind(this);
-    this.previousButtonClick = this.previousButtonClick.bind(this);
-    this.previousButtonClick = this.previousButtonClick.bind(this);
-    this.finishButtonClick = this.finishButtonClick.bind(this);
+    }
+    this.navigationStepChange = this.navigationStepChange.bind(this)
+    this.refreshAnimation = this.refreshAnimation.bind(this)
+    this.previousButtonClick = this.previousButtonClick.bind(this)
+    this.previousButtonClick = this.previousButtonClick.bind(this)
+    this.finishButtonClick = this.finishButtonClick.bind(this)
   }
   componentDidMount() {
-    this.refreshAnimation(0);
-    window.addEventListener("resize", this.updateWidth.bind(this));
+    this.refreshAnimation(0)
+    window.addEventListener('resize', this.updateWidth.bind(this))
   }
   componentWillUnmount() {
-    this.isCancelled = true;
-    window.removeEventListener("resize", this.updateWidth);
-    var id = window.setTimeout(null, 0);
+    this.isCancelled = true
+    window.removeEventListener('resize', this.updateWidth)
+    var id = window.setTimeout(null, 0)
     while (id--) {
-      window.clearTimeout(id);
+      window.clearTimeout(id)
     }
   }
   updateWidth() {
     !this.isCancelled &&
-      setTimeout(() => this.refreshAnimation(this.state.currentStep), 200);
+      setTimeout(() => this.refreshAnimation(this.state.currentStep), 200)
   }
   navigationStepChange(key) {
     if (this.props.navSteps) {
-      var validationState = true;
+      var validationState = true
       if (this.props.validate && key > this.state.currentStep) {
         for (var i = this.state.currentStep; i < key; i++) {
           if (
             this.refs[this.props.steps[i].stepName].isValidated !== undefined &&
             this.refs[this.props.steps[i].stepName].isValidated() === false
           ) {
-            validationState = false;
-            break;
+            validationState = false
+            break
           }
         }
       }
@@ -103,44 +103,39 @@ class ReactWizard extends React.Component {
           nextButton: this.props.steps.length > key + 1 ? true : false,
           previousButton: key > 0 ? true : false,
           finishButton: this.props.steps.length === key + 1 ? true : false
-        });
-        this.refreshAnimation(key);
+        })
+        this.refreshAnimation(key)
       }
     }
   }
   nextButtonClick() {
+    let wrappedInst = this.refs[
+      this.props.steps[this.state.currentStep].stepName
+    ].getWrappedInstance()
+
     if (
       (this.props.validate &&
-        ((this.refs[this.props.steps[this.state.currentStep].stepName]
-          .isValidated !== undefined &&
-          this.refs[
-            this.props.steps[this.state.currentStep].stepName
-          ].isValidated()) ||
-          this.refs[this.props.steps[this.state.currentStep].stepName]
-            .isValidated === undefined)) ||
+        ((wrappedInst.isValidated !== undefined && wrappedInst.isValidated()) ||
+          wrappedInst.isValidated === undefined)) ||
       this.props.validate === undefined ||
       !this.props.validate
     ) {
-      var key = this.state.currentStep + 1;
+      var key = this.state.currentStep + 1
       this.setState({
         wizardData: {
           ...this.state.wizardData,
-          [this.props.steps[this.state.currentStep].stepName]: this.refs[
-            this.props.steps[this.state.currentStep].stepName
-          ].state
+          ...this.refs[this.props.steps[this.state.currentStep].stepName].state
         },
         currentStep: key,
-        highestStep:
-          key > this.state.highestStep ? key : this.state.highestStep,
         nextButton: this.props.steps.length > key + 1 ? true : false,
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
-      });
-      this.refreshAnimation(key);
+      })
+      this.refreshAnimation(key)
     }
   }
   previousButtonClick() {
-    var key = this.state.currentStep - 1;
+    var key = this.state.currentStep - 1
     if (key >= 0) {
       this.setState({
         wizardData: {
@@ -155,8 +150,8 @@ class ReactWizard extends React.Component {
         nextButton: this.props.steps.length > key + 1 ? true : false,
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
-      });
-      this.refreshAnimation(key);
+      })
+      this.refreshAnimation(key)
     }
   }
   finishButtonClick() {
@@ -176,7 +171,7 @@ class ReactWizard extends React.Component {
       this.setState(
         {
           progressbarStyle: {
-            width: "100%"
+            width: '100%'
           },
           wizardData: {
             ...this.state.wizardData,
@@ -186,55 +181,55 @@ class ReactWizard extends React.Component {
           }
         },
         () => {
-          this.props.finishButtonClick(this.state.wizardData);
+          this.props.finishButtonClick(this.state.wizardData)
         }
-      );
+      )
     }
   }
   refreshAnimation(index) {
-    var total = this.props.steps.length;
-    var li_width = 100 / total;
+    var total = this.props.steps.length
+    var li_width = 100 / total
 
     var total_steps =
-      this.props.steps !== undefined ? this.props.steps.length : 0;
+      this.props.steps !== undefined ? this.props.steps.length : 0
     var move_distance =
       this.refs.wizard !== undefined
         ? this.refs.navStepsLi.children[0].clientWidth / total_steps
-        : 0;
-    var index_temp = index;
-    var vertical_level = 0;
+        : 0
+    var index_temp = index
+    var vertical_level = 0
 
-    var mobile_device = window.innerWidth < 600 && total > 3;
+    var mobile_device = window.innerWidth < 600 && total > 3
 
     if (mobile_device) {
-      move_distance = this.refs.navStepsLi.children[0].clientWidth / 2;
-      index_temp = index % 2;
-      li_width = 50;
+      move_distance = this.refs.navStepsLi.children[0].clientWidth / 2
+      index_temp = index % 2
+      li_width = 50
     }
 
-    this.setState({ width: li_width + "%" });
+    this.setState({ width: li_width + '%' })
 
-    var step_width = move_distance;
+    var step_width = move_distance
 
-    move_distance = move_distance * index_temp;
+    move_distance = move_distance * index_temp
 
     if (mobile_device) {
-      vertical_level = parseInt(index / 2);
-      vertical_level = vertical_level * 38;
+      vertical_level = parseInt(index / 2)
+      vertical_level = vertical_level * 38
     }
 
     var movingTabStyle = {
       width: step_width,
       transform:
-        "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
-      transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
-    };
+        'translate3d(' + move_distance + 'px, ' + vertical_level + 'px, 0)',
+      transition: 'all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)'
+    }
     this.setState({
       movingTabStyle: movingTabStyle,
       progressbarStyle: {
         width: move_distance + step_width / 2
       }
-    });
+    })
   }
   render() {
     return (
@@ -244,7 +239,7 @@ class ReactWizard extends React.Component {
           this.props.description !== undefined ? (
             <CardHeader
               className={
-                this.props.headerTextCenter !== undefined ? "text-center" : ""
+                this.props.headerTextCenter !== undefined ? 'text-center' : ''
               }
               data-background-color={this.state.color}
             >
@@ -274,7 +269,7 @@ class ReactWizard extends React.Component {
                           onClick={() => this.navigationStepChange(key)}
                         >
                           {prop.stepIcon !== undefined &&
-                          prop.stepIcon !== "" ? (
+                          prop.stepIcon !== '' ? (
                             <i className={prop.stepIcon} />
                           ) : null}
                           {this.props.progressbar ? (
@@ -284,14 +279,14 @@ class ReactWizard extends React.Component {
                           )}
                         </NavLink>
                       </NavItem>
-                    );
+                    )
                   })}
                 </Nav>
                 {this.props.progressbar ? null : (
                   <div className="moving-tab" style={this.state.movingTabStyle}>
                     {this.props.steps[this.state.currentStep].stepIcon !==
                       undefined &&
-                    this.props.steps[this.state.currentStep].stepIcon !== "" ? (
+                    this.props.steps[this.state.currentStep].stepIcon !== '' ? (
                       <i
                         className={
                           this.props.steps[this.state.currentStep].stepIcon
@@ -311,11 +306,11 @@ class ReactWizard extends React.Component {
                   <TabPane
                     tabId={key}
                     key={key}
-                    className={classnames("fade", {
+                    className={classnames('fade', {
                       show: this.state.currentStep === key
                     })}
                   >
-                    {typeof prop.component === "function" ? (
+                    {typeof prop.component === 'function' ? (
                       <prop.component
                         ref={prop.stepName}
                         wizardData={this.state.wizardData}
@@ -325,15 +320,15 @@ class ReactWizard extends React.Component {
                       <div ref={prop.stepName}>{prop.component}</div>
                     )}
                   </TabPane>
-                );
+                )
               })}
             </TabContent>
           </CardBody>
           <CardFooter>
-            <div style={{ float: "right" }}>
+            <div style={{ float: 'right' }}>
               {this.state.nextButton ? (
                 <Button
-                  className={classnames("btn-next", {
+                  className={classnames('btn-next', {
                     [this.props.nextButtonClasses]:
                       this.props.nextButtonClasses !== undefined
                   })}
@@ -341,12 +336,12 @@ class ReactWizard extends React.Component {
                 >
                   {this.props.nextButtonText !== undefined
                     ? this.props.nextButtonText
-                    : "Next"}
+                    : 'Next'}
                 </Button>
               ) : null}
               {this.state.finishButton ? (
                 <Button
-                  className={classnames("btn-finish d-inline-block", {
+                  className={classnames('btn-finish d-inline-block', {
                     [this.props.finishButtonClasses]:
                       this.props.finishButtonClasses !== undefined
                   })}
@@ -354,14 +349,14 @@ class ReactWizard extends React.Component {
                 >
                   {this.props.finishButtonText !== undefined
                     ? this.props.finishButtonText
-                    : "Finish"}
+                    : 'Finish'}
                 </Button>
               ) : null}
             </div>
-            <div style={{ float: "left" }}>
+            <div style={{ float: 'left' }}>
               {this.state.previousButton ? (
                 <Button
-                  className={classnames("btn-previous", {
+                  className={classnames('btn-previous', {
                     [this.props.previousButtonClasses]:
                       this.props.previousButtonClasses !== undefined
                   })}
@@ -369,7 +364,7 @@ class ReactWizard extends React.Component {
                 >
                   {this.props.previousButtonText !== undefined
                     ? this.props.previousButtonText
-                    : "Previous"}
+                    : 'Previous'}
                 </Button>
               ) : null}
             </div>
@@ -377,21 +372,21 @@ class ReactWizard extends React.Component {
           </CardFooter>
         </Card>
       </div>
-    );
+    )
   }
 }
 
 ReactWizard.defaultProps = {
   validate: false,
-  previousButtonText: "Previous",
-  finishButtonText: "Finish",
-  nextButtonText: "Next",
-  color: "primary",
+  previousButtonText: 'Previous',
+  finishButtonText: 'Finish',
+  nextButtonText: 'Next',
+  color: 'primary',
   progressbar: false
-};
+}
 
 ReactWizard.propTypes = {
-  color: PropTypes.oneOf(["primary", "green", "orange", "red", "blue"]),
+  color: PropTypes.oneOf(['primary', 'green', 'orange', 'red', 'blue']),
   previousButtonClasses: PropTypes.string,
   finishButtonClasses: PropTypes.string,
   nextButtonClasses: PropTypes.string,
@@ -413,6 +408,6 @@ ReactWizard.propTypes = {
       stepProps: PropTypes.object
     })
   ).isRequired
-};
+}
 
-export default ReactWizard;
+export default ReactWizard
