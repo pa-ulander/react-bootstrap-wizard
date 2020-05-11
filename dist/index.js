@@ -245,12 +245,12 @@ var ReactWizard = function (_React$Component) {
             },
             showTitle && _react2.default.createElement(
               _reactstrap.CardTitle,
-              { tag: 'h3' },
+              null,
               this.props.title
             ),
             showDescription && _react2.default.createElement(
-              'h3',
-              { className: 'description' },
+              _reactstrap.CardSubtitle,
+              null,
               this.props.description
             ),
             _react2.default.createElement(
