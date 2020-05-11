@@ -136,7 +136,7 @@ var ReactWizard = function (_React$Component) {
   }, {
     key: 'nextButtonClick',
     value: function nextButtonClick() {
-      var wrappedInst = this.refs[this.props.steps[this.state.currentStep].stepName].getWrappedInstance();
+      var wrappedInst = this.refs[this.props.steps[this.state.currentStep].stepName];
 
       if (this.props.validate && (wrappedInst.isValidated !== undefined && wrappedInst.isValidated() || wrappedInst.isValidated === undefined) || this.props.validate === undefined || !this.props.validate) {
         var key = this.state.currentStep + 1;
@@ -229,28 +229,31 @@ var ReactWizard = function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
+      var showTitle = this.props.title !== undefined;
+      var showDescription = this.props.description !== undefined;
+      var showHeader = showTitle === true && showDescription === true;
       return _react2.default.createElement(
         'div',
         { className: 'wizard-container', ref: 'wizard' },
         _react2.default.createElement(
           _reactstrap.Card,
           { className: 'card card-wizard active', 'data-color': this.state.color },
-          this.props.title !== undefined || this.props.description !== undefined ? _react2.default.createElement(
+          _react2.default.createElement(
             _reactstrap.CardHeader,
             {
               className: this.props.headerTextCenter !== undefined ? 'text-center' : '',
               'data-background-color': this.state.color
             },
-            this.props.title !== undefined ? _react2.default.createElement(
+            this.props.title && _react2.default.createElement(
               _reactstrap.CardTitle,
               { tag: 'h3' },
               this.props.title
-            ) : null,
-            this.props.description !== undefined ? _react2.default.createElement(
+            ),
+            this.props.description && _react2.default.createElement(
               'h3',
               { className: 'description' },
               this.props.description
-            ) : null,
+            ),
             _react2.default.createElement(
               'div',
               { className: 'wizard-navigation', ref: 'navStepsLi' },
@@ -297,7 +300,7 @@ var ReactWizard = function (_React$Component) {
                 '\u25B2'
               )
             )
-          ) : null,
+          ),
           _react2.default.createElement(
             _reactstrap.CardBody,
             null,
