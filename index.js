@@ -111,7 +111,7 @@ class ReactWizard extends React.Component {
   nextButtonClick() {
     let wrappedInst = this.refs[
       this.props.steps[this.state.currentStep].stepName
-    ].getWrappedInstance()
+    ]
 
     if (
       (this.props.validate &&
