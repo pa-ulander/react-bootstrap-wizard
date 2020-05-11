@@ -231,7 +231,6 @@ var ReactWizard = function (_React$Component) {
 
       var showTitle = this.props.title !== undefined;
       var showDescription = this.props.description !== undefined;
-      var showHeader = showTitle === true && showDescription === true;
       return _react2.default.createElement(
         'div',
         { className: 'wizard-container', ref: 'wizard' },
@@ -244,12 +243,12 @@ var ReactWizard = function (_React$Component) {
               className: this.props.headerTextCenter !== undefined ? 'text-center' : '',
               'data-background-color': this.state.color
             },
-            this.props.title && _react2.default.createElement(
+            showTitle && _react2.default.createElement(
               _reactstrap.CardTitle,
               { tag: 'h3' },
               this.props.title
             ),
-            this.props.description && _react2.default.createElement(
+            showDescription && _react2.default.createElement(
               'h3',
               { className: 'description' },
               this.props.description
