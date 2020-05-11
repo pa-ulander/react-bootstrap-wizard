@@ -3,6 +3,7 @@ import {
   Card,
   CardHeader,
   CardTitle,
+  CardSubtitle,
   CardBody,
   CardFooter,
   Nav,
@@ -245,10 +246,10 @@ class ReactWizard extends React.Component {
               data-background-color={this.state.color}
             >
               {showTitle && (
-                <CardTitle tag="h3">{this.props.title}</CardTitle>
+                <CardTitle>{this.props.title}</CardTitle>
               )}
               {showDescription && (
-                <h3 className="description">{this.props.description}</h3>
+                <CardSubtitle>{this.props.description}</CardSubtitle>
               )}
               <div className="wizard-navigation" ref="navStepsLi">
                 <div className="progress-with-circle">
